@@ -1,0 +1,180 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+<title>HR Application</title>
+<script>
+
+function validateForm(frm)
+{
+var firstInvalidComponent=null;
+var valid=true;
+var appointmentName=frm.appointmentName.value.trim();
+var appointmentNameErrorSection=document.getElementById('appointmentNameErrorSection');
+appointmentNameErrorSection.innerHTML='';
+if(appointmentName.length==0)
+{
+appointmentNameErrorSection.innerHTML='Name Required';
+valid=false;
+firstInvalidComponent=frm.appointmentName;
+}
+var carServicesCodes=frm.carServicesCodes.value;
+var carServicesCodesErrorSection=document.getElementById('carServicesCodesErrorSection');
+carServicesCodesErrorSection.innerHTML='';
+if(carServicesCodes==-1)
+{
+carServicesCodesErrorSection.innerHTML='Select Car Service';
+valid=false;
+if(firstInvalidComponent==null) firstInvalidComponent=frm.carServicesCodes;
+}
+var merchantCode=frm.merchantCode.value;
+var merchantCodeErrorSection=document.getElementById('merchantCodeErrorSection');
+merchantCodeErrorSection.innerHTML='';
+if(merchantCode==-1)
+{
+merchantCodeErrorSection.innerHTML='Select Merchant Name';
+valid=false;
+if(firstInvalidComponent==null) firstInvalidComponent=frm.merchantCode;
+}
+var appointmentAddress=frm.appointmentAddress.value.trim();
+var appointmentAddressErrorSection=document.getElementById('appointmentAddressErrorSection');
+appointmentAddressErrorSection.innerHTML='';
+if(appointmentAddress.length==0)
+{
+appointmentAddressErrorSection.innerHTML='Address Required';
+valid=false;
+if(firstInvalidComponent==null) firstInvalidComponent=frm.appointmentAddress;
+}
+var appointmentDescription=frm.appointmentDescription.value.trim();
+var appointmentDescriptionErrorSection=document.getElementById('appointmentDescriptionErrorSection');
+appointmentDescriptionErrorSection.innerHTML='';
+if(appointmentDescription.length==0)
+{
+appointmentDescriptionErrorSection.innerHTML='Service Related Description Required';
+valid=false;
+if(firstInvalidComponent==null) firstInvalidComponent=frm.appointmentDescription;
+}
+var appointmentContact=frm.appointmentContact.value.trim();
+var appointmentContactErrorSection=document.getElementById('appointmentContactErrorSection');
+appointmentContactErrorSection.innerHTML='';
+if(appointmentContact.length==0)
+{
+appointmentContactErrorSection.innerHTML='Contact Required';
+valid=false;
+if(firstInvalidComponent==null) firstInvalidComponent=frm.appointmentContact;
+}
+if(appointmentContact.length!=10)
+{
+appointmentContactErrorSection.innerHTML='Contact length should be only of 10 digits only';
+valid=false;
+if(firstInvalidComponent==null) firstInvalidComponent=frm.appointmentContact;
+}
+var v='0123456789';
+var e;
+e=0;
+while(e<appointmentContact.length)
+{
+if(v.indexOf(appointmentContact.charAt(e))==-1)
+{
+appointmentContactErrorSection.innerHTML='Invalid characters in Appointment Contact,Only numbers';
+valid=false;
+if(firstInvalidComponent==null) firstInvalidComponent=frm.appointmentContact;
+}
+e++;
+}
+if(!valid) firstInvalidComponent.focus();
+return valid;
+}
+function cancelAddition()
+{
+document.getElementById('cancelAdditionForm').submit();
+}
+</script>
+</head>
+<body>
+<!-- Main Container starts here  -->
+<div style ='width:90hw;height:auto;border:1px solid black'>
+<!-- Header starts here  -->
+<div style ='margin:5px;width:90hw;height:auto;border:1px solid black'>
+<img src='/minor2/images/newicon.png' style='float:left'><div style='margin-top:9px;margin-bottom:9px;font-size:20pt'>Thinking Machines</div>
+</div> <!--Header ends here  -->
+<!-- Content Section starts here  -->
+<div style ='width:90hw;height:70vh;margin:5px;border:1px solid white'>
+<!-- Left Panel starts here  -->
+<div style ='height:65vh;margin:5px;float:left;padding:5px;border:1px solid black'>
+<a href='/minor2/appointmentsView'>Merchants</a><br><br>
+<b>Car Services</b><br><br>
+<a href='/minor2/index.html'>Home</a>
+</div>
+<!-- Left Panel ends here  -->
+<!-- Right Panel starts here  -->
+<div style ='height:65vh;margin-left:105px;margin-right:5px;margin-bottom:px;margin-top:5px;padding:5px;border:1px solid black'>
+<h1>Appointment (Add Module)</h1>
+<form method='post' action='/minor2/addAppointment' onsubmit='return validateForm(this)'>
+<table>
+<tr>
+<td>Name</td>
+<td><input type='text' id='appointmentName' name='appointmentName' maxlength='50' size='36'<br>
+<span id='appointmentNameErrorSection' style='color: red'></span></td>
+</tr>
+
+<tr>
+<td>Address</td>
+<td><input type='text' id='appointmentAddress' name='appointmentAddress' maxlength='35' size='36'<br>
+<span id='appointmentAddressErrorSection' style='color: red'></span></td>
+</tr>
+
+<tr>
+<td>Contact</td>
+<td><input type='text' id='appointmentContact' name='appointmentContact' maxlength='35' size='36'<br>
+<span id='appointmentContactErrorSection' style='color: red'></span></td>
+</tr>
+
+<tr>
+<td>Merchant Name</td>
+<td><select id='merchantCode' name='merchantCode'>
+<option value='-1'>&lt;Select Merchant Name&gt;</option>
+<option value='1'>HatchBack</option>
+<option value='2'>Sedan</option>
+<option value='3'>SUV</option>
+<option value='4'>Luxury</option>
+<option value='5'>Premium</option>
+<option value='6'>Exotic</option>
+</select>
+<span id='merchantCodeErrorSection' style='color: red'></span>
+</td>
+</tr>
+<tr>
+<td>Car Service</td>
+<td><select id='carServicesCodes' name='carServicesCodes'>
+<option value='-1'>&lt;Select Car Service&gt;</option>
+<option value='1'>Car Washing</option>
+<option value='2'>Car Decoration</option>
+<option value='3'>Car Servicing</option>
+</select>
+<span id='carServicesCodesErrorSection' style='color: red'></span>
+</td>
+</tr>
+<td>Appointment Descripton</td>
+<td> <textarea id='appointmentDescription' name='appointmentDescription' rows='6' cols='50'></textarea>
+<br>
+<span id='appointmentDescriptionErrorSection' style='color: red'></span></td>
+</tr>
+<tr>
+<tr>
+<td colspan='2'><button type='submit'>Add</button>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<button type='button' onclick='cancelAddition()'>Cancel</button></td>
+</table>
+</form>
+</div>
+<!-- Right Panel ends here  -->
+</div> <!-- Content Section ends here  -->
+<!--footer starts here  -->
+<div style ='width:90hw;height:auto;margin:5px;text-align:center;border:1px solid white'>
+&copy; Thinking Machines 2021
+</div>
+</div>
+<form id='cancelAdditionForm' action='/minor2/appointmentsView'>
+</form>
+</body>
+</html>

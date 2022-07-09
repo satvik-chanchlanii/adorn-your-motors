@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Login Form</title>
+
+    <meta charset="UTF-8">
+<script>
+function validateForm(frm)
+{
+var firstInvalidComponent=null;
+var valid=true;
+var userName=frm.userName.value.trim();
+var userNameErrorSection=document.getElementById('userNameErrorSection');
+userNameErrorSection.innerHTML='';
+if(userName.length==0)
+{
+userNameErrorSection.innerHTML='Required';
+valid=false;
+firstInvalidComponent=frm.userName;
+}
+if(userName.localeCompare("adornMotors")==-1)
+{
+userNameErrorSection.innerHTML='Invalid';
+valid=false;
+firstInvalidComponent=frm.userName;
+}
+var password=frm.password.value.trim();
+var passwordErrorSection=document.getElementById('passwordErrorSection');
+passwordErrorSection.innerHTML='';
+if(password.length==0)
+{
+passwordErrorSection.innerHTML='Required';
+valid=false;
+if(firstInvalidComponent==null) firstInvalidComponent=frm.password;
+}
+if(password.localeCompare("adornMotors")==-1)
+{
+passwordErrorSection.innerHTML='Invalid';
+valid=false;
+firstInvalidComponent=frm.password;
+}
+if(!valid) firstInvalidComponent.focus();
+return valid;
+}
+</script>
+
+</head>
+
+<body>
+<form action='/minor2/AdminWork.html' onsubmit='return validateForm(this)'>
+<center>
+<i> <label>
+<h1 style="font-size: 50px; color: white;"><span style="background-color:;opacity: 0.9;border-color: 1px black; ">Admin Login</h1></label></span></i>
+</center>
+<input  class="username" placeholder="userName " type="text" name="userName" >
+<span id='userNameErrorSection' style='color: red'></span>
+            <br>
+            <br>
+<input  class="password" placeholder="password" type="password" name="password" >
+<span id='passwordErrorSection' style='color: red'></span>
+<br>
+       <br>
+    <input style=" border: hidden;background-color: lawngreen;  border-radius: 10px;padding: 6px;margin-left: 160px;" type="submit" value="Login" onclick='/minor2/AdminWork.html'>
+   <br>
+ </form>
+
+  </div>
+
+</body>
+
+</html>

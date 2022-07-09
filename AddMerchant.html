@@ -1,0 +1,338 @@
+
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='utf-8'>
+    <title>AutoWash - Car Wash Website Template</title>
+    <meta content='width=device-width, initial-scale=1.0' name='viewport'>
+    <meta content='Free Website Template' name='keywords'>
+    <meta content='Free Website Template' name='description'>
+
+    <!-- Favicon -->
+    <link href='img/favicon.ico' rel='icon'>
+
+    <!-- Google Font -->
+    <link href='https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800;900&display=swap'
+        rel='stylesheet'>
+
+    <!-- CSS Libraries -->
+    <link href='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css' rel='stylesheet'>
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css' rel='stylesheet'>
+    <link href='lib/flaticon/font/flaticon.css' rel='stylesheet'>
+    <link href='lib/animate/animate.min.css' rel='stylesheet'>
+    <link href='lib/owlcarousel/assets/owl.carousel.min.css' rel='stylesheet'>
+
+    <!-- Template Stylesheet -->
+    <link href='css/style.css' rel='stylesheet'>
+
+    <script>
+
+function validateForm(frm)
+{
+var firstInvalidComponent=null;
+var valid=true;
+var merchantName=frm.merchantName.value.trim();
+var merchantNameErrorSection=document.getElementById('merchantNameErrorSection');
+merchantNameErrorSection.innerHTML='';
+if(merchantName.length==0)
+{
+merchantNameErrorSection.innerHTML='Merchant Name Required';
+valid=false;
+firstInvalidComponent=frm.merchantName;
+}
+var merchantContact=frm.merchantContact.value.trim();
+var merchantContactErrorSection=document.getElementById('merchantContactErrorSection');
+merchantContactErrorSection.innerHTML='';
+if(merchantContact.length==0)
+{
+merchantContactErrorSection.innerHTML='Merchant Contact Required';
+valid=false;
+if(firstInvalidComponent==null) firstInvalidComponent=frm.merchantContact;
+}
+if(merchantContact.length!=10)
+{
+merchantContactErrorSection.innerHTML='Contact length should be only of 10 digits only';
+valid=false;
+if(firstInvalidComponent==null) firstInvalidComponent=frm.merchantContact;
+}
+var v='0123456789';
+var e;
+e=0;
+while(e<merchantContact.length)
+{
+if(v.indexOf(merchantContact.charAt(e))==-1)
+{
+merchantContactErrorSection.innerHTML='Invalid characters in Merchant Contact,Only numbers';
+valid=false;
+if(firstInvalidComponent==null) firstInvalidComponent=frm.merchantContact;
+}
+e++;
+}
+var merchantAddress=frm.merchantAddress.value.trim();
+var merchantAddressErrorSection=document.getElementById('merchantAddressErrorSection');
+merchantAddressErrorSection.innerHTML='';
+if(merchantAddress.length==0)
+{
+merchantAddressErrorSection.innerHTML='Merchant Address Required';
+valid=false;
+if(firstInvalidComponent==null) firstInvalidComponent=frm.merchantAddress;
+}
+var merchantDeliveryBoyName=frm.merchantDeliveryBoyName.value.trim();
+var merchantDeliveryBoyNameErrorSection=document.getElementById('merchantDeliveryBoyNameErrorSection');
+merchantDeliveryBoyNameErrorSection.innerHTML='';
+if(merchantDeliveryBoyName.length==0)
+{
+merchantDeliveryBoyNameErrorSection.innerHTML='Merchant Delivery Boy Name Required';
+valid=false;
+if(firstInvalidComponent==null) firstInvalidComponent=frm.merchantDeliveryBoyName;
+}
+var merchantDeliveryBoyContact=frm.merchantDeliveryBoyContact.value.trim();
+var aadharNumberErrorSection=document.getElementById('merchantDeliveryBoyContactErrorSection');
+merchantDeliveryBoyContactErrorSection.innerHTML='';
+if(merchantDeliveryBoyContact.length==0)
+{
+merchantDeliveryBoyContactErrorSection.innerHTML='Merchant Delivery Boy Contact Required';
+valid=false;
+if(firstInvalidComponent==null) firstInvalidComponent=frm.merchantDeliveryBoyContact;
+}
+if(merchantDeliveryBoyContact.length!=10)
+{
+merchantDeliveryBoyContactErrorSection.innerHTML='Contact length should be only of 10 digits only';
+valid=false;
+if(firstInvalidComponent==null) firstInvalidComponent=frm.merchantDeliveryBoyContact;
+}
+var v='0123456789';
+var e;
+e=0;
+while(e<merchantDeliveryBoyContact.length)
+{
+if(v.indexOf(merchantDeliveryBoyContact.charAt(e))==-1)
+{
+merchantDeliveryBoyContactErrorSection.innerHTML='Invalid characters in Merchant Contact,Only numbers';
+valid=false;
+if(firstInvalidComponent==null) firstInvalidComponent=frm.merchantDeliveryBoyContact;
+}
+e++;
+}
+if(!valid) firstInvalidComponent.focus();
+return valid;
+}
+function cancelAddition()
+{
+document.getElementById('cancelAdditionForm').submit();
+}
+           
+
+
+    </script>
+    <style>
+.form{
+margin-top: -92vh;
+position:absolute;
+background-color: #202C45;
+padding-left: 59px;
+padding-bottom: 30vh;
+margin-left: 137vh;
+}
+.form h1
+{
+font-size: 50px;
+color: white;
+}
+.img1{
+    margin-left: 0vh;
+}
+td{
+    color: white;
+}
+
+.bt1{
+    background-color: lawngreen;
+}
+.bt2{
+    background-color: red;
+}
+</style>
+</head>
+
+<body>
+    <!-- Top Bar Start -->
+    <div class='top-bar'>
+        <div class='container'>
+            <div class='row align-items-center'>
+                <div class='col-lg-4 col-md-12'>
+                    <div class='logo'>
+                        <a href='index.html'>
+                            <h1 style='font-size: 45px;'>Adorn<span>Your</span>Motor</h1>
+                            <!-- <img src='img/logo.jpg' alt='Logo'> -->
+                        </a>
+                    </div>
+                </div>
+                <div class='col-lg-8 col-md-7 d-none d-lg-block'>
+                    <div class='row'>
+                        <div class='col-4'>
+                            <div class='top-bar-item'>
+                                <div class='top-bar-icon'>
+                                    <i class='far fa-clock'></i>
+                                </div>
+                                <div class='top-bar-text'>
+                                    <h3>Opening Hour</h3>
+                                    <p> 9:00am - 8:00pm</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class='col-4'>
+                            <div class='top-bar-item'>
+                                <div class='top-bar-icon'>
+                                    <i class='fa fa-phone-alt'></i>
+                                </div>
+                                <div class='top-bar-text'>
+                                    <h3>Call Us</h3>
+                                    <p>0734-252524</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class='col-4'>
+                            <div class='top-bar-item'>
+                                <div class='top-bar-icon'>
+                                    <i class='far fa-envelope'></i>
+                                </div>
+                                <div class='top-bar-text'>
+                                    <h3>Email Us</h3>
+                                    <p>adouryourmotor@gmail.com</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Top Bar End -->
+<!-- Nav Bar Start -->
+    <div class='nav-bar'>
+        <div class='container'>
+            <nav class='navbar navbar-expand-lg bg-dark navbar-dark'>
+                <a href='#' class='navbar-brand'>MENU</a>
+                <button type='button' class='navbar-toggler' data-toggle='collapse' data-target='#navbarCollapse'>
+                    <span class='navbar-toggler-icon'></span>
+                </button>
+
+                <div class='collapse navbar-collapse justify-content-between' id='navbarCollapse'>
+                    <div class='navbar-nav mr-auto'>
+                        <a href='AdminWork.html' class='nav-item nav-link active'>Back To Admin Page</a>
+                        <a href='index.html' class='nav-item nav-link active'>Log Out</a>
+
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+    <!-- Nav Bar End -->
+
+    <!----Appointment Form--->
+    <div>
+<img class='img1' src='img/carousel-3.jpg' width='68%'>
+</div>
+<div class='form'>   
+<h1>Merchant Add Form</h1><br>
+    <form method='post' action='/minor2/addMerchant' onsubmit='return validateForm(this)'>
+        <table>
+        
+<tr>
+<td>Merchant Name</td>
+<td><input type='text' id='merchantName' name='merchantName' maxlength='35' size='36'<br>
+<span id='merchantNameErrorSection' style='color: red'></span></td>
+</tr>
+<tr>
+<td>Merchant Address</td>
+<td><input type='text' id='merchantAddress' name='merchantAddress' maxlength='35' size='36'<br>
+<span id='merchantAddressErrorSection' style='color: red'></span></td>
+</tr>
+<tr>
+<td>Merchant Contact</td>
+<td><input type='text' id='merchantContact' name='merchantContact' maxlength='10' size='36'<br>
+<span id='merchantContactErrorSection' style='color: red'></span></td>
+</tr>
+<tr>
+
+<tr>
+<td>Merchant Delivery Boy Name</td>
+<td><input type='text' id='merchantDeliveryBoyName' name='merchantDeliveryBoyName' maxlength='35' size='36'<br>
+<span id='merchantDeliveryBoyNameErrorSection' style='color: red'></span></td>
+</tr>
+
+<tr>
+<td>Merchant Delivery Boy Contact</td>
+<td><input type='text' id='merchantDeliveryBoyContact' name='merchantDeliveryBoyContact' maxlength='10' size='36'<br>
+<span id='merchantDeliveryBoyContactErrorSection' style='color: red'></span></td>
+</tr>
+  
+            <tr>
+                <td colspan='2'><button class='bt1' type='submit' style='margin-top: 20px; margin-left: 25vh;'>Add</button>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <button class='bt2' type='button' onclick='cancelAddition()'>Cancel</button>
+                </td>
+        </table>
+    </form>
+<form id='cancelAdditionForm' action='/minor2/adminMerchantsView'>
+</form>
+
+</div>
+      <!-- Footer Start -->
+      <div class='footer' style='margin-top: -0vh;'>
+        <div class='container'>
+            <div class='row'>
+                <div class='col-lg-3 col-md-6'>
+                    <div class='footer-contact'>
+                        <h2 id='contact1'>Get In Touch</h2>
+                        <p><i class='fa fa-map-marker-alt'></i>Mahakal Institute Of Technology,Ujjain,(M.P),INDIA</p>
+                        <p><i class='fa fa-phone-alt'></i>Rajeev Aanjana:-9174057563,<br>Satvik Chanchalani:-6367328169,<br>Priyanshi Porwal:-9770611620</p>
+                        <p><i class='fa fa-envelope'></i>adornyourmotor@gmail.com</p>
+                        <div class='footer-social'>
+                            <a class='btn' href=''><i class='fab fa-twitter'></i></a>
+                            <a class='btn' href=''><i class='fab fa-facebook-f'></i></a>
+                            <a class='btn' href=''><i class='fab fa-youtube'></i></a>
+                            <a class='btn' href=''><i class='fab fa-instagram'></i></a>
+                            <a class='btn' href=''><i class='fab fa-linkedin-in'></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class='col-lg-3 col-md-6'>
+                    <div class='footer-link'>
+                        <h2>Popular Links</h2>
+                        <a href='#about1'>About Us</a>
+                        <a href=''>Contact Us</a>
+                        <a href='#service1'>Our Service</a>
+                        <a href='#location1'>Service Points</a>
+                       
+                    </div>
+                </div>
+                <div class='col-lg-3 col-md-6'>
+                    <div class='footer-link'>
+                        <h2>Useful Links</h2>
+                        <a href=''>Terms of use</a>
+                        <a href=''>Privacy policy</a>
+                        <a href=''>Help</a>
+                    </div>
+                </div>
+                <div class='col-lg-3 col-md-6'>
+                    <div class='footer-newsletter'>
+<h2>Newsletter</h2>
+                        <form>
+                            <input class='form-control' placeholder='Full Name'>
+                            <input class='form-control' placeholder='Email'>
+                            <button class='btn btn-custom'>Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+    
+    </div>
+    <!-- Footer End -->
+</body>
+
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+<title>HR Application</title>
+<script>
+function Customer()
+{
+this.customerId="";
+this.customerName="";
+this.customerAddress="";
+this.customerContact="";
+this.customerCarVehicleNumber="";
+this.carServiceCode=0;
+this.carTypeCode=0;
+this.carServiceName="";
+this.carTypeName="";
+this.finalPricingToSend="";
+}
+var selectedRow=null;
+var customers=[];
+var customer=new Customer();
+customer.customerId="CUSTOMER1";
+customer.customerName="Ramesh Sharma";
+customer.customerAddress="Ujjain";
+customer.customerContact="9999900000";
+customer.customerCarVehicleNumber="MP 43 DY 1299";
+customer.carServiceCode=5;
+customer.carServiceName="Car Washing";
+customer.carTypeCode=1;
+customer.carTypeName="Sedan";
+customer.finalPricingToSend="1000";
+customers[0]=customer;
+
+
+function selectCustomer(row,customerId)
+{
+if(selectedRow==row) return;
+if(selectedRow!=null)
+{
+selectedRow.style.background= "white";
+selectedRow.style.color="black";
+}
+row.style.background= "#7C7B7B";
+row.style.color="white";
+selectedRow=row;
+var i;
+for(i=0;i<customers.length;i++)
+{
+if(customers[i].customerId==customerId)
+{
+break;
+}
+}
+var emp=customers[i];
+document.getElementById("detailPanel_customerId").innerHTML=emp.customerId;
+document.getElementById("detailPanel_customerName").innerHTML=emp.customerName;
+document.getElementById("detailPanel_customerAddress").innerHTML=emp.customerAddress;
+document.getElementById("detailPanel_customerContact").innerHTML=emp.customerContact;
+document.getElementById("detailPanel_customerCarVehicleNumber").innerHTML=emp.customerCarVehicleNumber;
+document.getElementById("detailPanel_carServiceName").innerHTML=emp.carServiceName;
+document.getElementById("detailPanel_carTypeName").innerHTML=emp.carTypeName;
+document.getElementById("detailPanel_finalPricingToSend").innerHTML=emp.finalPricingToSend;
+}
+</script>
+</head>
+<body>
+<!-- Main Container starts here  -->
+<div style ='width:90hw;height:auto;border:1px solid black'>
+<!-- Header starts here  -->
+<div style ='margin:5px;width:90hw;height:auto;border:1px solid black'>
+<a href='/minor/index.html'><img src='/minor/images/newicon.png' style='float:left'></a><div style='margin-top:9px;margin-bottom:9px;font-size:20pt'>Thinking Machines</div>
+</div> <!--Header ends here  -->
+<!-- Content Section starts here  -->
+<div style ='width:90hw;height:70vh;margin:5px;border:1px solid white'>
+<!-- Left Panel starts here  -->
+<div style ='height:65vh;margin:5px;float:left;padding:5px;border:1px solid black'>
+<a href='/minor/hospitalsView'>Hospitals</a><br><br>
+<b>Customers</b><br><br>
+<a href='/minor/index.html'>Home</a>
+</div>
+<!-- Left Panel ends here  -->
+<!-- Right Panel starts here  -->
+<div style ='height:65vh;margin-left:105px;margin-right:5px;margin-bottom:px;margin-top:5px;padding:5px;border:1px solid black'>
+<h4>Customers</h4>
+<div style ='height:30vh;margin-left:5px;margin-right:5px;margin-bottom:px;margin-top:5px;padding:5px;border:1px solid black;overflow:scroll'>
+<table border='1'>
+<thead>
+<tr>
+<th colspan='4' style='text-align:right;padding:5px'>
+</th>
+</tr>
+<tr>
+<th style='width:60px;text-align:center'>S.No.</th>
+<th style='width:200px;text-align:center'>Id.</th>
+<th style='width:200px;text-align:center'>Customer Name</th>
+<th style='width:100px;text-align:center'>Delete</th>
+</tr>
+</thead>
+<tbody>
+<tr style='cursor:pointer' onclick='selectCustomer(this,"CUSTOMER1")'>
+<td style='text-align:right'>1.</td>
+<td>CUSTOMER1</td>
+<td>Ramesh Sharma</td>
+<td style='text-align:center'><a href='/minor2/confirmDeleteCustomer?customerId=CUSTOMER1'>Delete</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div style ='height:20vh;margin-left:5px;margin-right:5px;margin-bottom:px;margin-top:5px;padding:5px;border:1px solid black'>
+<label style='background:gray;color:white;padding-left:5px;padding-right:5px'>Details</label>
+<table border='0' width="100%">
+<tr>
+<td>Customer Id :<span id='detailPanel_customerId' style='margin-right:100px'></span></td>
+<td>Customer Name :<span id='detailPanel_customerName' style='margin-right:100px'></span></td>
+<td>Customer Contact :<span id='detailPanel_customerContact' style='margin-right:100px'></span></td>
+</tr>
+<tr>
+<td>Customer Address :<span id='detailPanel_customerAddress' style='margin-right:100px'></span></td>
+<td>Customer Car Vehicle Number :<span id='detailPanel_customerCarVehicleNumber' style='margin-right:100px'></span></td>
+</tr>
+<tr>
+<td>Car Service Name :<span id='detailPanel_carServiceName' style='margin-right:100px'></span></td>
+<td>Car Type Name :<span id='detailPanel_carTypeName' style='margin-right:100px'></span></td>
+<td>Bill Amount :<span id='detailPanel_finalPricingToSend' style='margin-right:100px'></span></td>
+</tr>
+</div>
+</div>
+<!-- Right Panel ends here  -->
+</div> <!-- Content Section ends here  -->
+<!--footer starts here  -->
+<div style ='width:90hw;height:auto;text-align:center;border:1px solid white'>
+&copy; Thinking Machines 2021
+</div>
+</div>
+</body>
+</html>

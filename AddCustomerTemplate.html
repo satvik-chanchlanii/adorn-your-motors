@@ -1,0 +1,236 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+<title>HR Application</title>
+<script>
+
+function validateForm(frm)
+{
+var firstInvalidComponent=null;
+var valid=true;
+var customerName=frm.customerName.value.trim();
+var customerNameErrorSection=document.getElementById('customerNameErrorSection');
+customerNameErrorSection.innerHTML='';
+if(customerName.length==0)
+{
+customerNameErrorSection.innerHTML='Customer Name Required';
+valid=false;
+firstInvalidComponent=frm.customerName;
+}
+var carServicesCodes=frm.carServicesCodes.value;
+var carServicesCodesErrorSection=document.getElementById('carServicesCodesErrorSection');
+carServicesCodesErrorSection.innerHTML='';
+if(carServicesCodes==-1)
+{
+carServicesCodesErrorSection.innerHTML='Select Car Service';
+valid=false;
+if(firstInvalidComponent==null) firstInvalidComponent=frm.carServicesCodes;
+}
+var carTypesCodes=frm.carTypesCodes.value;
+var carTypesCodesErrorSection=document.getElementById('carTypesCodesErrorSection');
+carTypesCodesErrorSection.innerHTML='';
+if(carTypesCodes==-1)
+{
+carTypesCodesErrorSection.innerHTML='Select Car Type';
+valid=false;
+if(firstInvalidComponent==null) firstInvalidComponent=frm.carTypesCodes;
+}
+var customerAddress=frm.customerAddress.value.trim();
+var customerAddressErrorSection=document.getElementById('customerAddressErrorSection');
+customerAddressErrorSection.innerHTML='';
+if(customerAddress.length==0)
+{
+customerAddressErrorSection.innerHTML='Customer Address Required';
+valid=false;
+if(firstInvalidComponent==null) firstInvalidComponent=frm.customerAddress;
+}
+var customerCarVehicleNumber=frm.customerCarVehicleNumber.value.trim();
+var customerCarVehicleNumberErrorSection=document.getElementById('customerCarVehicleNumberErrorSection');
+customerCarVehicleNumberErrorSection.innerHTML='';
+if(customerCarVehicleNumber.length==0)
+{
+customerCarVehicleNumberErrorSection.innerHTML='Car Vehicle Number Number Required';
+valid=false;
+if(firstInvalidComponent==null) firstInvalidComponent=frm.customerCarVehicleNumber;
+}
+var v='0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+var e;
+e=0;
+while(e<customerCarVehicleNumber.length)
+{
+if(v.indexOf(customerCarVehicleNumber.charAt(e))==-1)
+{
+customerCarVehicleNumberErrorSection.innerHTML='Invalid characters in Customer Car Vehicle Number,Only numbers and capital letters';
+valid=false;
+if(firstInvalidComponent==null) firstInvalidComponent=frm.customerCarVehicleNumber;
+}
+e++;
+}
+var customerContact=frm.customerContact.value.trim();
+var aadharNumberErrorSection=document.getElementById('customerContactErrorSection');
+customerContactErrorSection.innerHTML='';
+if(customerContact.length==0)
+{
+customerContactErrorSection.innerHTML='Aadhar Card Number Required';
+valid=false;
+if(firstInvalidComponent==null) firstInvalidComponent=frm.customerContact;
+}
+if(customerContact.length!=10)
+{
+customerContactErrorSection.innerHTML='Contact length should be only of 10 digits only';
+valid=false;
+if(firstInvalidComponent==null) firstInvalidComponent=frm.customerContact;
+}
+var v='0123456789';
+var e;
+e=0;
+while(e<customerContact.length)
+{
+if(v.indexOf(customerContact.charAt(e))==-1)
+{
+customerContactErrorSection.innerHTML='Invalid characters in Customer Contact,Only numbers';
+valid=false;
+if(firstInvalidComponent==null) firstInvalidComponent=frm.customerContact;
+}
+e++;
+}
+if(!valid) firstInvalidComponent.focus();
+return valid;
+}
+function cancelAddition()
+{
+document.getElementById('cancelAdditionForm').submit();
+}
+function changeCarPrice(carServicesCode,carTypesCode)
+{
+if(carServicesCode==-1 || carTypesCode==-1) return;
+let price=0;
+if(carServicesCode==1 && carTypesCode==1) price=100;
+else if(carServicesCode==1 && carTypesCode==2) price=200;
+else if(carServicesCode==1 && carTypesCode==3) price=300;
+else if(carServicesCode==1 && carTypesCode==4) price=400;
+else if(carServicesCode==1 && carTypesCode==5) price=500;
+else if(carServicesCode==1 && carTypesCode==6) price=600;
+else if(carServicesCode==2 && carTypesCode==1) price=700;
+else if(carServicesCode==2 && carTypesCode==2) price=800;
+else if(carServicesCode==2 && carTypesCode==3) price=900;
+else if(carServicesCode==2 && carTypesCode==4) price=1000;
+else if(carServicesCode==2 && carTypesCode==5) price=1100;
+else if(carServicesCode==2 && carTypesCode==6) price=1200;
+else if(carServicesCode==3 && carTypesCode==1) price=1300;
+else if(carServicesCode==3 && carTypesCode==2) price=1400;
+else if(carServicesCode==3 && carTypesCode==3) price=1500;
+else if(carServicesCode==3 && carTypesCode==4) price=1600;
+else if(carServicesCode==3 && carTypesCode==5) price=1700;
+else if(carServicesCode==3 && carTypesCode==6) price=1800;
+document.getElementById("carFinalPrice").innerHTML=price;
+}
+function onDocumentLoad()
+{
+document.getElementById("carServicesCodes").addEventListener('change',(ev)=>{
+changeCarPrice(ev.target.value,document.getElementById("carTypesCodes").value)
+})
+document.getElementById("carTypesCodes").addEventListener('change',(ev)=>{
+changeCarPrice(document.getElementById("carServicesCodes").value,ev.target.value)
+})
+ 
+}
+window.addEventListener('load',onDocumentLoad)
+</script>
+</head>
+<body>
+<!-- Main Container starts here  -->
+<div style ='width:90hw;height:auto;border:1px solid black'>
+<!-- Header starts here  -->
+<div style ='margin:5px;width:90hw;height:auto;border:1px solid black'>
+<img src='/minor2/images/newicon.png' style='float:left'><div style='margin-top:9px;margin-bottom:9px;font-size:20pt'>Thinking Machines</div>
+</div> <!--Header ends here  -->
+<!-- Content Section starts here  -->
+<div style ='width:90hw;height:70vh;margin:5px;border:1px solid white'>
+<!-- Left Panel starts here  -->
+<div style ='height:65vh;margin:5px;float:left;padding:5px;border:1px solid black'>
+<a href='/minor2/customersView'>Merchants</a><br><br>
+<b>Car Services</b><br><br>
+<a href='/minor2/index.html'>Home</a>
+</div>
+<!-- Left Panel ends here  -->
+<!-- Right Panel starts here  -->
+<div style ='height:65vh;margin-left:105px;margin-right:5px;margin-bottom:px;margin-top:5px;padding:5px;border:1px solid black'>
+<h1>Customer (Add Module)</h1>
+<form method='post' action='/minor2/addCustomer' onsubmit='return validateForm(this)'>
+<table>
+<tr>
+<td>Customer Name</td>
+<td><input type='text' id='customerName' name='customerName' maxlength='50' size='36'<br>
+<span id='customerNameErrorSection' style='color: red'></span></td>
+</tr>
+
+<tr>
+<td>Customer Address</td>
+<td><input type='text' id='customerAddress' name='customerAddress' maxlength='35' size='36'<br>
+<span id='customerAddressErrorSection' style='color: red'></span></td>
+</tr>
+
+<tr>
+<td>Customer Contact</td>
+<td><input type='text' id='customerContact' name='customerContact' maxlength='35' size='36'<br>
+<span id='customerContactErrorSection' style='color: red'></span></td>
+</tr>
+
+<tr>
+<td>Customer Car Vehicle Number</td>
+<td><input type='text' id='customerCarVehicleNumber' name='customerCarVehicleNumber' maxlength='35' size='36'<br>
+<span id='customerCarVehicleNumberErrorSection' style='color: red'></span></td>
+</tr>
+
+<tr>
+<td>Car Service</td>
+<td><select id='carServicesCodes' name='carServicesCodes'>
+<option value='-1'>&lt;Select Car Service&gt;</option>
+<option value='1'>Car Washing</option>
+<option value='2'>Car Decoration</option>
+<option value='3'>Car Servicing</option>
+</select>
+<span id='carServicesCodesErrorSection' style='color: red'></span>
+</td>
+</tr>
+
+<tr>
+<td>Car Type</td>
+<td><select id='carTypesCodes' name='carTypesCodes'>
+<option value='-1'>&lt;Select Car Type&gt;</option>
+<option value='1'>HatchBack</option>
+<option value='2'>Sedan</option>
+<option value='3'>SUV</option>
+<option value='4'>Luxury</option>
+<option value='5'>Premium</option>
+<option value='6'>Exotic</option>
+</select>
+<span id='carTypesCodesErrorSection' style='color: red'></span>
+</td>
+</tr>
+<tr>
+<td>Car Final Price</td>
+<td id='carFinalPrice'>
+0
+</td>
+</tr>
+<tr>
+<tr>
+<td colspan='2'><button type='submit'>Add</button>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<button type='button' onclick='cancelAddition()'>Cancel</button></td>
+</table>
+</form>
+</div>
+<!-- Right Panel ends here  -->
+</div> <!-- Content Section ends here  -->
+<!--footer starts here  -->
+<div style ='width:90hw;height:auto;margin:5px;text-align:center;border:1px solid white'>
+&copy; Thinking Machines 2021
+</div>
+</div>
+<form id='cancelAdditionForm' action='/minor2/customersView'>
+</form>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+<title>HR Application</title>
+</head>
+<body>
+<!-- Main Container starts here  -->
+<div style ='width:90hw;height:auto;border:1px solid black'>
+<!-- Header starts here  -->
+<div style ='margin:5px;width:90hw;height:auto;border:1px solid black'>
+<img src='/minor2/images/newicon.png' style='float:left'><div style='margin-top:9px;margin-bottom:9px;font-size:20pt'>Thinking Machines</div>
+</div> <!--Header ends here  -->
+<!-- Content Section starts here  -->
+<div style ='width:90hw;height:70vh;margin:5px;border:1px solid white'>
+<!-- Left Panel starts here  -->
+<div style ='height:65vh;margin:5px;float:left;padding:5px;border:1px solid black'>
+<a href='/minor2/merchantsView'>Merchants</a><br><br>
+<a href='/minor2/merchantsView'>Car Services</a><br><br>
+<a href='/minor2/AdminLogin.html'>Admin</a><br>
+</div>
+<!-- Left Panel ends here  -->
+<!-- Right Panel starts here  -->
+<div style ='height:65vh;margin-left:105px;margin-right:5px;margin-bottom:px;margin-top:5px;padding:5px;border:1px solid black'>
+<h1>Welcome</h1>
+</div>
+<!-- Right Panel ends here  -->
+</div> <!-- Content Section ends here  -->
+<!--footer starts here  -->
+<div style ='width:90hw;height:auto;margin:5px;text-align:center;border:1px solid white'>
+&copy; Thinking Machines 2021
+</div>
+</div>
+</body>
+</html>

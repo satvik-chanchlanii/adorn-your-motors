@@ -1,0 +1,493 @@
+package com.project.hr.servlets;
+import com.project.hr.dl.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+
+public class AddCustomer extends HttpServlet
+{
+public void doGet(HttpServletRequest request,HttpServletResponse response)
+{
+try
+{
+PrintWriter pw=response.getWriter();
+response.setContentType("text/html");
+String merchantName=request.getParameter("merchantName");
+int merchantsCode=Integer.parseInt(request.getParameter("merchantNumber"));
+String customerName=request.getParameter("customerName");
+String customerAddress=request.getParameter("customerAddress");
+String customerContact=request.getParameter("customerContact");
+String customerCarVehicleNumber=request.getParameter("customerCarVehicleNumber");
+int carServicesCode=Integer.parseInt(request.getParameter("carServicesCodes"));
+int carTypesCode=Integer.parseInt(request.getParameter("carTypesCodes"));
+String finalPricingToSend=request.getParameter("carFinalPrice");
+/*
+Enumeration<String> params = request.getParameterNames();
+
+while (params.hasMoreElements()) {
+	System.out.println("param = " + params.nextElement());
+}
+*/
+CustomerDAO customerDAO=new CustomerDAO();
+MerchantDAO merchantDAO=new MerchantDAO();
+CarServiceDAO carServiceDAO=new CarServiceDAO();
+CarTypeDAO carTypeDAO=new CarTypeDAO();
+try
+{
+boolean add=false;
+boolean merchantCodeExists=merchantDAO.merchantNumberExists(merchantsCode);
+boolean carServiceCodeExists=carServiceDAO.carServiceCodeExists(carServicesCode);
+boolean carTypeCodeExists=carTypeDAO.carTypeCodeExists(carTypesCode);
+boolean customerContactExists=customerDAO.customerContactExists(customerContact);
+boolean customerCarVehicleNumberExists=customerDAO.customerCarVehicleNumberExists(customerCarVehicleNumber);
+if(merchantCodeExists==false || carServiceCodeExists==false || carTypeCodeExists==false || customerContactExists==true || customerCarVehicleNumberExists==true)
+{
+pw.println("<!DOCTYPE HTML>");
+pw.println("<html lang='en'>");
+pw.println("<head>");
+pw.println("<title>HR Application</title>");
+pw.println("<script>");
+pw.println("");
+pw.println("function validateForm(frm)");
+pw.println("{");
+pw.println("console.log(document.getElementById('carFinalPrice').value);");
+pw.println("var firstInvalidComponent=null;");
+pw.println("var valid=true;");
+pw.println("var customerName=frm.customerName.value.trim();");
+pw.println("var customerNameErrorSection=document.getElementById('customerNameErrorSection');");
+pw.println("customerNameErrorSection.innerHTML='';");
+pw.println("if(customerName.length==0)");
+pw.println("{");
+pw.println("customerNameErrorSection.innerHTML='Customer Name Required';");
+pw.println("valid=false;");
+pw.println("firstInvalidComponent=frm.customerName;");
+pw.println("}");
+pw.println("var merchantN=frm.merchantN.value;");
+pw.println("var merchantNErrorSection=document.getElementById('merchantNErrorSection');");
+pw.println("merchantNErrorSection.innerHTML='';");
+pw.println("if(merchantN.length==0)");
+pw.println("{");
+pw.println("merchantNErrorSection.innerHTML='merchant Required';");
+pw.println("valid=false;");
+pw.println("firstInvalidComponent=frm.merchantN;");
+pw.println("}");
+pw.println("var carServicesCodes=frm.carServicesCodes.value;");
+pw.println("var carServicesCodesErrorSection=document.getElementById('carServicesCodesErrorSection');");
+pw.println("carServicesCodesErrorSection.innerHTML='';");
+pw.println("if(carServicesCodes==-1)");
+pw.println("{");
+pw.println("carServicesCodesErrorSection.innerHTML='Select Car Service';");
+pw.println("valid=false;");
+pw.println("if(firstInvalidComponent==null) firstInvalidComponent=frm.carServicesCodes;");
+pw.println("}");
+pw.println("var carTypesCodes=frm.carTypesCodes.value;");
+pw.println("var carTypesCodesErrorSection=document.getElementById('carTypesCodesErrorSection');");
+pw.println("carTypesCodesErrorSection.innerHTML='';");
+pw.println("if(carTypesCodes==-1)");
+pw.println("{");
+pw.println("carTypesCodesErrorSection.innerHTML='Select Car Type';");
+pw.println("valid=false;");
+pw.println("if(firstInvalidComponent==null) firstInvalidComponent=frm.carTypesCodes;");
+pw.println("}");
+pw.println("var customerAddress=frm.customerAddress.value.trim();");
+pw.println("var customerAddressErrorSection=document.getElementById('customerAddressErrorSection');");
+pw.println("customerAddressErrorSection.innerHTML='';");
+pw.println("if(customerAddress.length==0)");
+pw.println("{");
+pw.println("customerAddressErrorSection.innerHTML='Customer Address Required';");
+pw.println("valid=false;");
+pw.println("if(firstInvalidComponent==null) firstInvalidComponent=frm.customerAddress;");
+pw.println("}");
+pw.println("var customerCarVehicleNumber=frm.customerCarVehicleNumber.value.trim();");
+pw.println("var customerCarVehicleNumberErrorSection=document.getElementById('customerCarVehicleNumberErrorSection');");
+pw.println("customerCarVehicleNumberErrorSection.innerHTML='';");
+pw.println("if(customerCarVehicleNumber.length==0)");
+pw.println("{");
+pw.println("customerCarVehicleNumberErrorSection.innerHTML='Car Vehicle Number Number Required';");
+pw.println("valid=false;");
+pw.println("if(firstInvalidComponent==null) firstInvalidComponent=frm.customerCarVehicleNumber;");
+pw.println("}");
+pw.println("var v='0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';");
+pw.println("var e;");
+pw.println("e=0;");
+pw.println("while(e<customerCarVehicleNumber.length)");
+pw.println("{");
+pw.println("if(v.indexOf(customerCarVehicleNumber.charAt(e))==-1)");
+pw.println("{");
+pw.println("customerCarVehicleNumberErrorSection.innerHTML='Invalid characters in Customer Car Vehicle Number,Only numbers and capital letters';");
+pw.println("valid=false;");
+pw.println("if(firstInvalidComponent==null) firstInvalidComponent=frm.customerCarVehicleNumber;");
+pw.println("}");
+pw.println("e++;");
+pw.println("}");
+pw.println("var customerContact=frm.customerContact.value.trim();");
+pw.println("var aadharNumberErrorSection=document.getElementById('customerContactErrorSection');");
+pw.println("customerContactErrorSection.innerHTML='';");
+pw.println("if(customerContact.length==0)");
+pw.println("{");
+pw.println("customerContactErrorSection.innerHTML='Aadhar Card Number Required';");
+pw.println("valid=false;");
+pw.println("if(firstInvalidComponent==null) firstInvalidComponent=frm.customerContact;");
+pw.println("}");
+pw.println("if(customerContact.length!=10)");
+pw.println("{");
+pw.println("customerContactErrorSection.innerHTML='Contact length should be only of 10 digits only';");
+pw.println("valid=false;");
+pw.println("if(firstInvalidComponent==null) firstInvalidComponent=frm.customerContact;");
+pw.println("}");
+pw.println("var v='0123456789';");
+pw.println("var e;");
+pw.println("e=0;");
+pw.println("while(e<customerContact.length)");
+pw.println("{");
+pw.println("if(v.indexOf(customerContact.charAt(e))==-1)");
+pw.println("{");
+pw.println("customerContactErrorSection.innerHTML='Invalid characters in Customer Contact,Only numbers';");
+pw.println("valid=false;");
+pw.println("if(firstInvalidComponent==null) firstInvalidComponent=frm.customerContact;");
+pw.println("}");
+pw.println("e++;");
+pw.println("}");
+pw.println("if(!valid) firstInvalidComponent.focus();");
+pw.println("return valid;");
+pw.println("}");
+pw.println("function cancelAddition()");
+pw.println("{");
+pw.println("document.getElementById('cancelAdditionForm').submit();");
+pw.println("}");
+pw.println("function changeCarPrice(carServicesCode,carTypesCode)");
+pw.println("{");
+pw.println("if(carServicesCode==-1 || carTypesCode==-1) return;");
+pw.println("let price=0;");
+pw.println("if(carServicesCode==1 && carTypesCode==1) price=100;");
+pw.println("else if(carServicesCode==1 && carTypesCode==2) price=200;");
+pw.println("else if(carServicesCode==1 && carTypesCode==3) price=300;");
+pw.println("else if(carServicesCode==1 && carTypesCode==4) price=400;");
+pw.println("else if(carServicesCode==1 && carTypesCode==5) price=500;");
+pw.println("else if(carServicesCode==1 && carTypesCode==6) price=600;");
+pw.println("else if(carServicesCode==2 && carTypesCode==1) price=700;");
+pw.println("else if(carServicesCode==2 && carTypesCode==2) price=800;");
+pw.println("else if(carServicesCode==2 && carTypesCode==3) price=900;");
+pw.println("else if(carServicesCode==2 && carTypesCode==4) price=1000;");
+pw.println("else if(carServicesCode==2 && carTypesCode==5) price=1100;");
+pw.println("else if(carServicesCode==2 && carTypesCode==6) price=1200;");
+pw.println("else if(carServicesCode==3 && carTypesCode==1) price=1300;");
+pw.println("else if(carServicesCode==3 && carTypesCode==2) price=1400;");
+pw.println("else if(carServicesCode==3 && carTypesCode==3) price=1500;");
+pw.println("else if(carServicesCode==3 && carTypesCode==4) price=1600;");
+pw.println("else if(carServicesCode==3 && carTypesCode==5) price=1700;");
+pw.println("else if(carServicesCode==3 && carTypesCode==6) price=1800;");
+pw.println("else if(carServicesCode==4 && carTypesCode==1) price=1800;");
+pw.println("else if(carServicesCode==4 && carTypesCode==2) price=1800;");
+pw.println("else if(carServicesCode==4 && carTypesCode==3) price=1800;");
+pw.println("else if(carServicesCode==4 && carTypesCode==4) price=1800;");
+pw.println("else if(carServicesCode==4 && carTypesCode==5) price=1800;");
+pw.println("else if(carServicesCode==4 && carTypesCode==6) price=1800;");
+pw.println("else if(carServicesCode==5 && carTypesCode==1) price=1800;");
+pw.println("else if(carServicesCode==5 && carTypesCode==2) price=1800;");
+pw.println("else if(carServicesCode==5 && carTypesCode==3) price=1800;");
+pw.println("else if(carServicesCode==5 && carTypesCode==4) price=1800;");
+pw.println("else if(carServicesCode==5 && carTypesCode==5) price=1800;");
+pw.println("else if(carServicesCode==5 && carTypesCode==6) price=1800;");
+pw.println("else if(carServicesCode==6 && carTypesCode==1) price=1800;");
+pw.println("else if(carServicesCode==6 && carTypesCode==2) price=1800;");
+pw.println("else if(carServicesCode==6 && carTypesCode==3) price=1800;");
+pw.println("else if(carServicesCode==6 && carTypesCode==4) price=1800;");
+pw.println("else if(carServicesCode==6 && carTypesCode==5) price=1800;");
+pw.println("else if(carServicesCode==6 && carTypesCode==6) price=1800;");
+pw.println("else if(carServicesCode==7 && carTypesCode==1) price=1800;");
+pw.println("else if(carServicesCode==7 && carTypesCode==2) price=1800;");
+pw.println("else if(carServicesCode==7 && carTypesCode==3) price=1800;");
+pw.println("else if(carServicesCode==7 && carTypesCode==4) price=1800;");
+pw.println("else if(carServicesCode==7 && carTypesCode==5) price=1800;");
+pw.println("else if(carServicesCode==7 && carTypesCode==6) price=1800;");
+pw.println("else if(carServicesCode==8 && carTypesCode==1) price=1800;");
+pw.println("else if(carServicesCode==8 && carTypesCode==2) price=1800;");
+pw.println("else if(carServicesCode==8 && carTypesCode==3) price=1800;");
+pw.println("else if(carServicesCode==8 && carTypesCode==4) price=1800;");
+pw.println("else if(carServicesCode==8 && carTypesCode==5) price=1800;");
+pw.println("else if(carServicesCode==8 && carTypesCode==6) price=1800;");
+pw.println("else if(carServicesCode==9 && carTypesCode==1) price=1800;");
+pw.println("else if(carServicesCode==9 && carTypesCode==2) price=1800;");
+pw.println("else if(carServicesCode==9 && carTypesCode==3) price=1800;");
+pw.println("else if(carServicesCode==9 && carTypesCode==4) price=1800;");
+pw.println("else if(carServicesCode==9 && carTypesCode==5) price=1800;");
+pw.println("else if(carServicesCode==9 && carTypesCode==6) price=1800;");
+pw.println("else console.log('else called');");
+pw.println("console.log(price);");
+pw.println("document.getElementById('carFinalPrice').value=price;");
+pw.println("}");
+pw.println("function onDocumentLoad()");
+pw.println("{");
+pw.println("document.getElementById(\"carServicesCodes\").addEventListener('change',(ev)=>{");
+pw.println("changeCarPrice(ev.target.value,document.getElementById(\"carTypesCodes\").value)");
+pw.println("})");
+pw.println("document.getElementById(\"carTypesCodes\").addEventListener('change',(ev)=>{");
+pw.println("changeCarPrice(document.getElementById(\"carServicesCodes\").value,ev.target.value)");
+pw.println("})");
+pw.println(" ");
+pw.println("}");
+pw.println("window.addEventListener('load',onDocumentLoad)");
+pw.println("</script>");
+pw.println("</head>");
+pw.println("<body>");
+pw.println("<!-- Main Container starts here  -->");
+pw.println("<div style ='width:90hw;height:auto;border:1px solid black'>");
+pw.println("<!-- Header starts here  -->");
+pw.println("<div style ='margin:5px;width:90hw;height:auto;border:1px solid black'>");
+pw.println("<img src='/minor2/images/newicon.png' style='float:left'><div style='margin-top:9px;margin-bottom:9px;font-size:20pt'>Thinking Machines</div>");
+pw.println("</div> <!--Header ends here  -->");
+pw.println("<!-- Content Section starts here  -->");
+pw.println("<div style ='width:90hw;height:70vh;margin:5px;border:1px solid white'>");
+pw.println("<!-- Left Panel starts here  -->");
+pw.println("<div style ='height:65vh;margin:5px;float:left;padding:5px;border:1px solid black'>");
+pw.println("<a href='/minor2/customersView'>Merchants</a><br><br>");
+pw.println("<b>Car Services</b><br><br>");
+pw.println("<a href='/minor2/index.html'>Home</a>");
+pw.println("</div>");
+pw.println("<!-- Left Panel ends here  -->");
+pw.println("<!-- Right Panel starts here  -->");
+pw.println("<div style ='height:65vh;margin-left:105px;margin-right:5px;margin-bottom:px;margin-top:5px;padding:5px;border:1px solid black'>");
+pw.println("<h1>Customer (Add Module)</h1>");
+pw.println("<form method='post' action='/minor2/addCustomer' onsubmit='return validateForm(this)'>");
+
+
+
+
+pw.println("<table>");
+int merchantNumber=0;
+//String merchantName;
+MerchantDTO merchantDTO=merchantDAO.getByMerchantNumber(merchantsCode);
+
+pw.println("<td>Merchant</td>");
+pw.println("<td><input type='text' id='merchantN' name='merchantN' maxlength='50' size='36' value="+merchantDTO.getMerchantName()+"<br>");
+pw.println("<input type='hidden' style='border:none' id='merchantNumber' name='merchantNumber' value='"+merchantNumber+"'><br>");
+if(merchantCodeExists==false)
+{
+pw.println("<span id='merchantNErrorSection' style='color: red'> Invalid Merchant Name</span>");
+}
+else
+{
+pw.println("<span id='merchantNErrorSection' style='color: red'></span>");
+}
+pw.println("</tr>");
+/*
+pw.println("<span id='merchantNErrorSection' style='color: red'></span></td>");
+pw.println("</tr>");
+pw.println("<tr>");
+pw.println("<td>Merchant</td>");
+pw.println("<td><input type='text' style='border:none' id='merchantN' name='merchantN' maxlength='50' size='36' value="+merchant.getMerchantName()+"<br>");
+pw.println("<input type='hidden' id='merchantNumber' name='merchantNumber' value='"+merchantNumber+"'><br>");
+*/
+pw.println("<tr>");
+pw.println("<td>Customer Name</td>");
+pw.println("<td><input type='text' id='customerName' name='customerName' maxlength='50' size='36' value='"+customerName+"'<br>");
+pw.println("<span id='customerNameErrorSection' style='color: red'></span></td>");
+pw.println("</tr>");
+pw.println("");
+pw.println("<tr>");
+pw.println("<td>Customer Address</td>");
+pw.println("<td><input type='text' id='customerAddress' name='customerAddress' maxlength='35' size='36' value='"+customerAddress+"'<br>");
+pw.println("<span id='customerAddressErrorSection' style='color: red'></span></td>");
+pw.println("</tr>");
+pw.println("");
+pw.println("<tr>");
+pw.println("<td>Customer Contact</td>");
+pw.println("<td><input type='text' id='customerContact' name='customerContact' maxlength='35' size='36' value='"+customerContact+"' <br>");
+if(customerContactExists)
+{
+pw.println("<span id='customerContactErrorSection' style='color: red'>Customer Contact Exists</span></td>");
+}
+else
+{
+pw.println("<span id='customerContactErrorSection' style='color: red'></span></td>");
+}
+pw.println("</tr>");
+pw.println("");
+pw.println("<tr>");
+pw.println("<td>Customer Car Vehicle Number</td>");
+pw.println("<td><input type='text' id='customerCarVehicleNumber' name='customerCarVehicleNumber' maxlength='35' size='36' value='"+customerCarVehicleNumber+"'<br>");
+if(customerCarVehicleNumberExists)
+{
+pw.println("<span id='customerCarVehicleNumberErrorSection' style='color: red'>Customer Car Vehicle Number Exists</span></td>");
+}
+else
+{
+pw.println("<span id='customerCarVehicleNumberErrorSection' style='color: red'></span></td>");
+}
+pw.println("</tr>");
+pw.println("");
+pw.println("<tr>");
+pw.println("<td>Car Service</td>");
+pw.println("<td><select id='carServicesCodes' name='carServicesCodes'>");
+pw.println("<option value='-1'>&lt;Select Car Service&gt;</option>");
+List<CarServiceDTO> carServices=carServiceDAO.getAll();
+int carServiceCode;
+String carServiceName;
+for(CarServiceDTO carService:carServices)
+{
+carServiceCode=carService.getCarServiceCode();
+carServiceName=carService.getCarServiceName();
+if(carServiceCode!=carServicesCode)
+{
+pw.println("<option value='"+carServiceCode+"'>"+carServiceName+"</option>");
+}
+else
+{
+pw.println("<option selected value='"+carServiceCode+"'>"+carServiceName+"</option>");
+}
+}
+pw.println("</select>");
+if(carServiceCodeExists==false)
+{
+pw.println("<span id='carServicesCodeErrorSection' style='color: red'> Invalid Car Service</span>");
+}
+else
+{
+pw.println("<span id='carServicesCodeErrorSection' style='color: red'></span>");
+}
+pw.println("</td>");
+pw.println("</tr>");
+pw.println("");
+pw.println("<tr>");
+pw.println("<td>Car Type</td>");
+pw.println("<td><select id='carTypesCodes' name='carTypesCodes'>");
+pw.println("<option value='-1'>&lt;Select Car Type&gt;</option>");
+List<CarTypeDTO> carTypes=carTypeDAO.getAll();
+int carTypeCode;
+String carTypeName;
+for(CarTypeDTO carType:carTypes)
+{
+carTypeCode=carType.getCarTypeCode();
+carTypeName=carType.getCarTypeName();
+if(carTypeCode!=carTypesCode)
+{
+pw.println("<option value='"+carTypeCode+"'>"+carTypeName+"</option>");
+}
+else
+{
+pw.println("<option selected value='"+carTypeCode+"'>"+carTypeName+"</option>");
+}
+}
+pw.println("</select>");
+if(carTypeCodeExists==false)
+{
+pw.println("<span id='carTypesCodeErrorSection' style='color: red'> Invalid Car Type</span>");
+}
+else
+{
+pw.println("<span id='carTypesCodeErrorSection' style='color: red'></span>");
+}
+pw.println("</td>");
+pw.println("</tr>");
+pw.println("<tr>");
+pw.println("<td>Car Final Price</td>");
+pw.println("<td> <input style='border:none' type='text' id = 'carFinalPrice' name = 'carFinalPrice' value="+finalPricingToSend+">");
+pw.println("</td>");
+pw.println("</tr>");
+pw.println("<tr>");
+pw.println("<td colspan='2'><button type='submit'>Add</button>");
+pw.println("&nbsp;&nbsp;&nbsp;&nbsp;");
+pw.println("<button type='button' onclick='cancelAddition()'>Cancel</button></td>");
+pw.println("</tr>");
+pw.println("</table>");
+
+
+
+
+pw.println("</form>");
+pw.println("</div>");
+pw.println("<!-- Right Panel ends here  -->");
+pw.println("</div> <!-- Content Section ends here  -->");
+pw.println("<!--footer starts here  -->");
+pw.println("<div style ='width:90hw;height:auto;margin:5px;text-align:center;border:1px solid white'>");
+pw.println("&copy; Thinking Machines 2021");
+pw.println("</div>");
+pw.println("</div>");
+pw.println("<form id='cancelAdditionForm' action='/minor2/customersView'>");
+pw.println("</form>");
+pw.println("</body>");
+pw.println("</html>");
+return; // add form resent 
+}
+}catch(DAOException dao)
+{
+System.out.println(dao.getMessage());
+}
+CustomerDTO customer=new CustomerDTO();
+customer.setMerchantCode(merchantsCode);
+customer.setCustomerName(customerName);
+customer.setCustomerAddress(customerAddress);
+customer.setCustomerContact(customerContact);
+customer.setCustomerCarVehicleNumber(customerCarVehicleNumber);
+customer.setCarServicesCodes(carServicesCode);
+customer.setCarTypesCodes(carTypesCode);
+customer.setFinalPricingToSend(finalPricingToSend);
+try
+{
+customerDAO.add(customer);
+pw.println("<!DOCTYPE HTML>");
+pw.println("<html lang='en'>");
+pw.println("<head>");
+pw.println("<title>HR Application</title>");
+pw.println("</head>");
+pw.println("<body>");
+pw.println("<!-- Main Container starts here  -->");
+pw.println("<div style ='width:90hw;height:auto;border:1px solid black'>");
+pw.println("<!-- Header starts here  -->");
+pw.println("<div style ='margin:5px;width:90hw;height:auto;border:1px solid black'>");
+pw.println("<img src='/minor2/images/newicon.png' style='float:left'><div style='margin-top:9px;margin-bottom:9px;font-size:20pt'>Thinking Machines</div>");
+pw.println("</div> <!--Header ends here  -->");
+pw.println("<!-- Content Section starts here  -->");
+pw.println("<div style ='width:90hw;height:70vh;margin:5px;border:1px solid white'>");
+pw.println("<!-- Left Panel starts here  -->");
+pw.println("<div style ='height:65vh;margin:5px;float:left;padding:5px;border:1px solid black'>");
+pw.println("<a href='/minor2/merchantsView'>Merchants</a><br><br>");
+pw.println("<a href='/minor2/merchantsView'>Car Services</a><br><br>");
+pw.println("<a href='/minor2/index.html'>Home</a><br><br>");
+pw.println("</div>");
+pw.println("<!-- Left Panel ends here  -->");
+pw.println("<!-- Right Panel starts here  -->");
+pw.println("<div style ='height:65vh;margin-left:105px;margin-right:5px;margin-bottom:px;margin-top:5px;padding:5px;border:1px solid black'>");
+pw.println("<h3>Notification</h3>");
+pw.println("Customer Added<br><br>");
+pw.println("<tr>");
+pw.println("<td>");
+pw.println("<form action='/minor2/merchantsView'>");
+pw.println("<button type='submit'>OK</button>");
+pw.println("</form>");
+pw.println("</td>");
+pw.println("</tr>");
+pw.println("</td>");
+pw.println("</tr>");
+pw.println("</table>");
+pw.println("</div>");
+pw.println("<!-- Right Panel ends here  -->");
+pw.println("</div> <!-- Content Section ends here  -->");
+pw.println("<!--footer starts here  -->");
+pw.println("<div style ='width:90hw;height:auto;margin:5px;text-align:center;border:1px solid white'>");
+pw.println("&copy; Thinking Machines 2021");
+pw.println("</div>");
+pw.println("</div>");
+pw.println("</body>");
+pw.println("</html>");
+}catch(DAOException dao)
+{
+// recreate form with error message
+}
+}catch(IOException ioException)
+{
+System.out.println(ioException.getMessage());
+}catch(Exception e)
+{
+System.out.println(e);
+}
+}
+public void doPost(HttpServletRequest request,HttpServletResponse response)
+{
+doGet(request,response);
+}
+} // class customers view

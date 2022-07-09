@@ -1,0 +1,169 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+<title>HR Application</title>
+<script>
+function validateForm(frm)
+{
+var firstInvalidComponent=null;
+var valid=true;
+var merchantName=frm.merchantName.value.trim();
+var merchantNameErrorSection=document.getElementById('merchantNameErrorSection');
+merchantNameErrorSection.innerHTML='';
+if(merchantName.length==0)
+{
+merchantNameErrorSection.innerHTML='Merchant Name Required';
+valid=false;
+firstInvalidComponent=frm.merchantName;
+}
+var merchantContact=frm.merchantContact.value.trim();
+var merchantContactErrorSection=document.getElementById('merchantContactErrorSection');
+merchantContactErrorSection.innerHTML='';
+if(merchantContact.length==0)
+{
+merchantContactErrorSection.innerHTML='Merchant Contact Required';
+valid=false;
+if(firstInvalidComponent==null) firstInvalidComponent=frm.merchantContact;
+}
+if(merchantContact.length!=10)
+{
+merchantContactErrorSection.innerHTML='Contact length should be only of 10 digits only';
+valid=false;
+if(firstInvalidComponent==null) firstInvalidComponent=frm.merchantContact;
+}
+var v='0123456789';
+var e;
+e=0;
+while(e<merchantContact.length)
+{
+if(v.indexOf(merchantContact.charAt(e))==-1)
+{
+merchantContactErrorSection.innerHTML='Invalid characters in Merchant Contact,Only numbers';
+valid=false;
+if(firstInvalidComponent==null) firstInvalidComponent=frm.merchantContact;
+}
+e++;
+}
+var merchantAddress=frm.merchantAddress.value.trim();
+var merchantAddressErrorSection=document.getElementById('merchantAddressErrorSection');
+merchantAddressErrorSection.innerHTML='';
+if(merchantAddress.length==0)
+{
+merchantAddressErrorSection.innerHTML='Merchant Address Required';
+valid=false;
+if(firstInvalidComponent==null) firstInvalidComponent=frm.merchantAddress;
+}
+var merchantDeliveryBoyName=frm.merchantDeliveryBoyName.value.trim();
+var merchantDeliveryBoyNameErrorSection=document.getElementById('merchantDeliveryBoyNameErrorSection');
+merchantDeliveryBoyNameErrorSection.innerHTML='';
+if(merchantDeliveryBoyName.length==0)
+{
+merchantDeliveryBoyNameErrorSection.innerHTML='Merchant Delivery Boy Name Required';
+valid=false;
+if(firstInvalidComponent==null) firstInvalidComponent=frm.merchantDeliveryBoyName;
+}
+var merchantDeliveryBoyContact=frm.merchantDeliveryBoyContact.value.trim();
+var aadharNumberErrorSection=document.getElementById('merchantDeliveryBoyContactErrorSection');
+merchantDeliveryBoyContactErrorSection.innerHTML='';
+if(merchantDeliveryBoyContact.length==0)
+{
+merchantDeliveryBoyContactErrorSection.innerHTML='Merchant Delivery Boy Contact Required';
+valid=false;
+if(firstInvalidComponent==null) firstInvalidComponent=frm.merchantDeliveryBoyContact;
+}
+if(merchantDeliveryBoyContact.length!=10)
+{
+merchantDeliveryBoyContactErrorSection.innerHTML='Contact length should be only of 10 digits only';
+valid=false;
+if(firstInvalidComponent==null) firstInvalidComponent=frm.merchantDeliveryBoyContact;
+}
+var v='0123456789';
+var e;
+e=0;
+while(e<merchantDeliveryBoyContact.length)
+{
+if(v.indexOf(merchantDeliveryBoyContact.charAt(e))==-1)
+{
+merchantDeliveryBoyContactErrorSection.innerHTML='Invalid characters in Merchant Contact,Only numbers';
+valid=false;
+if(firstInvalidComponent==null) firstInvalidComponent=frm.merchantDeliveryBoyContact;
+}
+e++;
+}
+if(!valid) firstInvalidComponent.focus();
+return valid;
+}
+function cancelAddition()
+{
+document.getElementById('cancelAdditionForm').submit();
+}
+</script>
+</head>
+<body>
+<!-- Main Container starts here  -->
+<div style ='width:90hw;height:auto;border:1px solid black'>
+<!-- Header starts here  -->
+<div style ='margin:5px;width:90hw;height:auto;border:1px solid black'>
+<img src='/minor2/images/newicon.png' style='float:left'><div style='margin-top:9px;margin-bottom:9px;font-size:20pt'>Thinking Machines</div>
+</div> <!--Header ends here  -->
+<!-- Content Section starts here  -->
+<div style ='width:90hw;height:70vh;margin:5px;border:1px solid white'>
+<!-- Left Panel starts here  -->
+<div style ='height:65vh;margin:5px;float:left;padding:5px;border:1px solid black'>
+<a href='/minor2/adminMerchantsView'>Merchants</a><br><br>
+<a href='/minor2/adminCustomersView'>Customers</a><br><br>
+<a href='/minor2/index.html'>Home</a>
+</div>
+<!-- Left Panel ends here  -->
+<!-- Right Panel starts here  -->
+<div style ='height:65vh;margin-left:105px;margin-right:5px;margin-bottom:px;margin-top:5px;padding:5px;border:1px solid black'>
+<h1>Merchant (Add Module)</h1>
+<form method='post' action='/minor2/addMerchant' onsubmit='return validateForm(this)'>
+<table>
+<tr>
+<td>Merchant Name</td>
+<td><input type='text' id='merchantName' name='merchantName' maxlength='35' size='36'<br>
+<span id='merchantNameErrorSection' style='color: red'></span></td>
+</tr>
+<tr>
+<td>Merchant Address</td>
+<td><input type='text' id='merchantAddress' name='merchantAddress' maxlength='35' size='36'<br>
+<span id='merchantAddressErrorSection' style='color: red'></span></td>
+</tr>
+<tr>
+<td>Merchant Contact</td>
+<td><input type='text' id='merchantContact' name='merchantContact' maxlength='10' size='36'<br>
+<span id='merchantContactErrorSection' style='color: red'></span></td>
+</tr>
+<tr>
+
+<tr>
+<td>Merchant Delivery Boy Name</td>
+<td><input type='text' id='merchantDeliveryBoyName' name='merchantDeliveryBoyName' maxlength='35' size='36'<br>
+<span id='merchantDeliveryBoyNameErrorSection' style='color: red'></span></td>
+</tr>
+
+<tr>
+<td>Merchant Delivery Boy Contact</td>
+<td><input type='text' id='merchantDeliveryBoyContact' name='merchantDeliveryBoyContact' maxlength='10' size='36'<br>
+<span id='merchantDeliveryBoyContactErrorSection' style='color: red'></span></td>
+</tr>
+<tr>
+<tr>
+<td colspan='2'><button type='submit'>Add</button>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<button type='button' onclick='cancelAddition()'>Cancel</button></td>
+</table>
+</form>
+</div>
+<!-- Right Panel ends here  -->
+</div> <!-- Content Section ends here  -->
+<!--footer starts here  -->
+<div style ='width:90hw;height:auto;margin:5px;text-align:center;border:1px solid white'>
+&copy; Thinking Machines 2021
+</div>
+</div>
+<form id='cancelAdditionForm' action='/minor2/adminMerchantsView'>
+</form>
+</body>
+</html>

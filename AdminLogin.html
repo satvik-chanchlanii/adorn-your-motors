@@ -1,0 +1,67 @@
+<html>
+<head>
+    <title> Transparent Login Form Design </title>
+    <link rel='stylesheet' type='text/css' href='style.css'>   
+<script>
+function validateForm(frm)
+{
+
+var firstInvalidComponent=null;
+var valid=true;
+var userName=frm.userName.value.trim();
+var userNameErrorSection=document.getElementById('userNameErrorSection');
+userNameErrorSection.innerHTML='';
+if(userName.length==0)
+{
+userNameErrorSection.innerHTML='Required';
+valid=false;
+firstInvalidComponent=frm.userName;
+}
+if(userName.localeCompare("hospitalUpdates")==-1)
+{
+userNameErrorSection.innerHTML='Invalid';
+valid=false;
+firstInvalidComponent=frm.userName;
+}
+var password=frm.password.value.trim();
+var passwordErrorSection=document.getElementById('passwordErrorSection');
+passwordErrorSection.innerHTML='';
+if(password.length==0)
+{
+passwordErrorSection.innerHTML='Required';
+valid=false;
+if(firstInvalidComponent==null) firstInvalidComponent=frm.password;
+}
+if(password.localeCompare("hospitalUpdates")==-1)
+{
+passwordErrorSection.innerHTML='Invalid';
+valid=false;
+firstInvalidComponent=frm.password;
+}
+if(!valid) firstInvalidComponent.focus();
+return valid;
+}
+</script>
+</head>
+    <body>
+
+    <div class='login-box'>
+    <img src='avatar.png' class='avatar'>
+        <h1>Login Here</h1>
+<form action='/minor2/AdminWork.html' onsubmit='return validateForm(this)'>
+            <p>Username</p>
+            <input type='text' name='userName' placeholder='Enter Username'>
+<span id='userNameErrorSection' style='color: red'></span>
+
+            <p>Password</p>
+            <input type='password' name='password' placeholder='Enter Password'>
+<span id='passwordErrorSection' style='color: red'></span>
+
+            <input type='submit' name='submit' value='Login' onclick='/minor2/AdminWork.html' >   
+            </form>
+        
+        
+        </div>
+    
+    </body>
+</html>

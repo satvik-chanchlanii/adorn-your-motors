@@ -1,0 +1,127 @@
+package com.project.hr.servlets;
+import com.project.hr.dl.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+
+public class AddCustomer extends HttpServlet
+{
+public void doGet(HttpServletRequest request,HttpServletResponse response)
+{
+try
+{
+PrintWriter pw=response.getWriter();
+response.setContentType("text/html");
+String customerName=request.getParameter("customerName");
+String customerAddress=request.getParameter("customerAddress");
+String customerContact=request.getParameter("customerContact");
+String customerCarVehicleNumber=request.getParameter("customerCarVehicleNumber");
+int carServicesCodes=Integer.parseInt(request.getParameter("carServicesCodes"));
+int carTypesCodes=Integer.parseInt(request.getParameter("carTypesCodes"));
+String finalPricingToSend=request.getParameter("carFinalPrice");
+System.out.println(finalPricingToSend);
+System.out.println(customerName);
+System.out.println(customerContact);
+
+CustomerDAO customerDAO=new CustomerDAO();
+CarServiceDAO carServiceDAO=new CarServiceDAO();
+CarTypeDAO carTypeDAO=new CarTypeDAO();
+/*
+try
+{
+boolean add=false;
+boolean carServiceCodeExists=carServiceDAO.carServiceCodeExists(carServicesCode);
+boolean carTypeCodeExists=carTypeDAO.carTypeCodeExists(carTypesCode);
+boolean customerContactExists=customerDAO.customerContactExists(customerContact);
+boolean customerCarVehicleNumberExists=customerDAO.customerCarVehicleNumberExists(customerCarVehicleNumber);
+if(carServiceCodeExists==false || carTypeCodeExists==false || customerContactExists==true || customerVehicleNumberExists==true)
+{
+
+
+
+
+return; // add form resent 
+}
+add=true;
+return;
+}catch(DAOException dao)
+{
+System.out.println(dao.getMessage());
+}
+*/
+CustomerDTO customer=new CustomerDTO();
+customer.setCustomerName(customerName);
+customer.setCustomerAddress(customerAddress);
+customer.setCustomerContact(customerContact);
+customer.setCustomerCarVehicleNumber(customerCarVehicleNumber);
+customer.setCarServicesCodes(carServicesCodes);
+customer.setCarTypesCodes(carTypesCodes);
+customer.setFinalPricingToSend(finalPricingToSend);
+try
+{
+customerDAO.add(customer);
+pw.println("<!DOCTYPE HTML>");
+pw.println("<html lang='en'>");
+pw.println("<head>");
+pw.println("<title>HR Application</title>");
+pw.println("</head>");
+pw.println("<body>");
+pw.println("<!-- Main Container starts here  -->");
+pw.println("<div style ='width:90hw;height:auto;border:1px solid black'>");
+pw.println("<!-- Header starts here  -->");
+pw.println("<div style ='margin:5px;width:90hw;height:auto;border:1px solid black'>");
+pw.println("<img src='/minor2/images/newicon.png' style='float:left'><div style='margin-top:9px;margin-bottom:9px;font-size:20pt'>Thinking Machines</div>");
+pw.println("</div> <!--Header ends here  -->");
+pw.println("<!-- Content Section starts here  -->");
+pw.println("<div style ='width:90hw;height:70vh;margin:5px;border:1px solid white'>");
+pw.println("<!-- Left Panel starts here  -->");
+pw.println("<div style ='height:65vh;margin:5px;float:left;padding:5px;border:1px solid black'>");
+pw.println("<a href='/minor2/merchantsView'>Merchants</a><br><br>");
+pw.println("<a href='/minor2/merchantsView'>Car Services</a><br><br>");
+pw.println("<a href='/minor2/index.html'>Home</a><br><br>");
+pw.println("</div>");
+pw.println("<!-- Left Panel ends here  -->");
+pw.println("<!-- Right Panel starts here  -->");
+pw.println("<div style ='height:65vh;margin-left:105px;margin-right:5px;margin-bottom:px;margin-top:5px;padding:5px;border:1px solid black'>");
+pw.println("<h3>Notification</h3>");
+pw.println("Customer Added<br><br>");
+pw.println("<tr>");
+pw.println("<td>");
+pw.println("<form action='/minor2/merchantsView'>");
+pw.println("<button type='submit'>OK</button>");
+pw.println("</form>");
+pw.println("</td>");
+pw.println("</tr>");
+pw.println("</td>");
+pw.println("</tr>");
+pw.println("</table>");
+pw.println("</div>");
+pw.println("<!-- Right Panel ends here  -->");
+pw.println("</div> <!-- Content Section ends here  -->");
+pw.println("<!--footer starts here  -->");
+pw.println("<div style ='width:90hw;height:auto;margin:5px;text-align:center;border:1px solid white'>");
+pw.println("&copy; Thinking Machines 2021");
+pw.println("</div>");
+pw.println("</div>");
+pw.println("</body>");
+pw.println("</html>");
+}catch(DAOException dao)
+{
+// recreate form with error message
+}
+}catch(IOException ioException)
+{
+System.out.println(ioException.getMessage());
+}catch(Exception e)
+{
+System.out.println(e);
+}
+}
+public void doPost(HttpServletRequest request,HttpServletResponse response)
+{
+doGet(request,response);
+}
+} // class customers view
